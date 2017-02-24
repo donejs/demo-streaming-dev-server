@@ -1,0 +1,29 @@
+<h1>Todos</h1>
+
+<ul id="todos"></ul>
+
+<script>
+	fetch('/api/todos').then(function(res){
+		var decoder = new TextDecoder();
+		var reader = res.body.getReader();
+
+		function readRow() {
+			return reader.read().then(function(result){
+				if(result.done) {
+					return;
+				}
+
+				var json = decoder.decode(result.value);
+				var row = JSON.parse(json);
+
+				var li = document.createElement('li');
+				li.textContent = row.task;
+				todos.appendChild(li);
+
+				return readRow();
+			});
+		}
+
+		readRow();
+	});
+</script>
