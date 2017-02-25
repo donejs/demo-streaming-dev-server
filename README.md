@@ -36,6 +36,42 @@ Alternative you can install globally:
 npm install -g donejs-streaming-dev-server
 ```
 
+# Create a database
+
+Start PostgreSQL by Brew Service
+
+```shell
+brew tap homebrew/services
+brew services start postgresql
+```
+
+Stop PostgreSQL
+```shell
+brew services start postgresql
+```
+
+Create Database todos
+```shell
+psql
+postgres=# CREATE DATABASE todos;
+postgres=# \c todos;
+todos=#
+```
+
+Create Table todos with two columns: id and text
+
+```shell
+todos=# create table todos (id int not null, text varchar(100));
+```
+
+Run createdb.sh in the directory(may cost several minutes to finish that)
+
+```shell
+sh createdb.sh
+```
+
+
+
 # Running
 
 If you added donejs-streaming-dev-server as an NPM script you can run it with `npm start`.
