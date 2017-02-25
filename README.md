@@ -47,7 +47,7 @@ brew services start postgresql
 
 Stop PostgreSQL
 ```shell
-brew services start postgresql
+brew services stop postgresql
 ```
 
 Create Database todos
