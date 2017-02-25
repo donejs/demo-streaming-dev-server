@@ -10,6 +10,14 @@ Install with:
 npm install donejs-streaming-dev-server
 ```
 
+```homebrew
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+
+```install PostgreSQL with HomeBrew
+brew install postgresql
+```
+
 And then in your package.json scripts add this script:
 
 ```json
