@@ -9,12 +9,13 @@ Install with:
 ```shell
 npm install donejs-streaming-dev-server
 ```
-
+Install Homebrew to install postgresql database, if you already have homebrew, skip this step.
 ```homebrew
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
-```install PostgreSQL with HomeBrew
+install PostgreSQL with HomeBrew
+```
 brew install postgresql
 ```
 
