@@ -1,0 +1,7 @@
+<h1>Todos</h1>
+
+<ul id="todos">
+{{#each todos}}
+	<li>{{text}}</li>
+{{/each}}
+</ul>
