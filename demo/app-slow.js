@@ -1,10 +1,12 @@
+var connect = require("can-connect/all");
+var DefineMap = require("can-define/map/map");
+var DefineList = require("can-define/list/list");
+var view = require("./view.stache");
 
-var render = can.stache.from("todosTemplate");
+var Todo = DefineMap.extend({});
 
-var Todo = can.DefineMap.extend({});
-
-Todo.List = can.DefineList.extend({});
-Todo.connection = can.connect(["constructor", "can/map", "constructor/store",
+Todo.List = DefineList.extend({});
+Todo.connection = connect(["constructor", "can/map", "constructor/store",
 	"data/callbacks", "data/parse", "data/url", "constructor/callbacks-once"], {
 	Map: Todo,
 	List: Todo.List,
@@ -12,7 +14,7 @@ Todo.connection = can.connect(["constructor", "can/map", "constructor/store",
 	url: "/api/todos.json"
 });
 
-var ViewModel = can.DefineMap.extend({
+var ViewModel = DefineMap.extend({
 	todosPromise: {
 		get: function(){
 			return Todo.getList({});
@@ -25,5 +27,5 @@ var ViewModel = can.DefineMap.extend({
 	}
 });
 
-var fragment = render(new ViewModel());
+var fragment = view(new ViewModel());
 document.querySelector("#app").appendChild(fragment);

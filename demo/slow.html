@@ -1,19 +1,9 @@
 <html>
 <head>
 	<title>A really fast website</title>
-	<script type="text/stache" id="todosTemplate">
-		<ul id="todos">
-		{{#each todos}}
-			<li>{{text}}</li>
-		{{/each}}
-		</ul>
-	</script>
-	<script src="https://rawgit.com/canjs/canjs/v3.4.1/dist/global/can.js" defer></script>
-	<script src="./app-slow.js" defer></script>
+	<script src="./node_modules/steal/steal.production.js" main="app-slow"></script>
 </head>
 <body>
-	<h1>Todos</h1>
-
 	<div id="app"></div>
 </body>
 </html>
