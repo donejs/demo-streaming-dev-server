@@ -1,7 +1,11 @@
-<h1>Todos</h1>
+<h1>Todo List</h1>
 
-<ul id="todos">
+<div class="container">
+<div class="row">
+<ul id="list-group">
 {{#each todos}}
-	<li>{{text}}</li>
+	<li class = "list-group-item" id = "list">{{text}}</li>
 {{/each}}
+</div>
+</div>
 </ul>

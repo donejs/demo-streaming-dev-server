@@ -1,0 +1,31 @@
+
+h1 {
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: 100;
+  margin: 0;
+  text-align: center;
+  padding: 10px;
+}
+#list-group {
+  text-align: center;
+  list-style-type: none;
+}
+#list {
+	color: red;
+
+#todos {
+    counter-reset: index;
+}
+
+#todos li:nth-child(2n+0) {
+    counter-increment: index;
+    list-style: none;
+}
+
+#todos li:nth-child(2n+0):before {
+    content: counter(index) ".";
+}
+
+#todos li:nth-child(2n+0):before {
+    content: "";
+}
