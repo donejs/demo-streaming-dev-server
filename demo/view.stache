@@ -1,7 +1,8 @@
-<h1>Todos</h1>
+<h1>Todo List</h1>
 
 <ul id="todos">
 {{#each todos}}
-	<li>{{text}}</li>
+	<li> <input type="checkbox"> {{id}} {{text}} {{{emoji}}}</li>
+	<hr>
 {{/each}}
 </ul>
