@@ -29,7 +29,7 @@ module.exports = function({ cwd = process.cwd() } = {}){
 				res.write(JSON.stringify(allData));
 				res.end();
 			})
-		} else if(parsed.pathname === '/apis/todos.ndjson') {
+		} else if(parsed.pathname === '/api/todos.ndjson') {
 			var query = client.query('select * from todos');
 			query.on('row', function(row){
 				var json = JSON.stringify(row);
