@@ -1,29 +1,19 @@
-<h1>Todos</h1>
+<html>
+<head>
+	<title>A really fast website</title>
+	<script type="text/stache" id="todosTemplate">
+		<ul id="todos">
+		{{#each todos}}
+			<li>{{task}}</li>
+		{{/each}}
+		</ul>
+	</script>
+	<script src="https://rawgit.com/canjs/canjs/v3.4.1/dist/global/can.js" defer></script>
+	<script src="./app-fast.js" defer></script>
+</head>
+<body>
+	<h1>Todos</h1>
 
-<ul id="todos"></ul>
-
-<script>
-	fetch('/api/todos').then(function(res){
-		var decoder = new TextDecoder();
-		var reader = res.body.getReader();
-
-		function readRow() {
-			return reader.read().then(function(result){
-				if(result.done) {
-					return;
-				}
-
-				var json = decoder.decode(result.value);
-				var row = JSON.parse(json);
-
-				var li = document.createElement('li');
-				li.textContent = row.task;
-				todos.appendChild(li);
-
-				return readRow();
-			});
-		}
-
-		readRow();
-	});
-</script>
+	<div id="app"></div>
+</body>
+</html>

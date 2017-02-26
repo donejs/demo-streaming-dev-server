@@ -7,6 +7,7 @@
     "donejs-streaming-dev-server": "bin/server.js"
   },
   "scripts": {
+		"start": "node bin/server.js demo/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

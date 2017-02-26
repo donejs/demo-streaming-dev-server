@@ -3,6 +3,7 @@ const fs = require('fs');
 const http = require('http');
 const ndjson = require('ndjson');
 const pg = require('pg');
+const URL = require('url');
 
 module.exports = function({ cwd = process.cwd() } = {}){
 	var apiRequest = /api/;
@@ -13,8 +14,12 @@ module.exports = function({ cwd = process.cwd() } = {}){
 	client.connect();
 
 	var server = http.createServer(function(req, res){
-		if(apiRequest.test(req.url)) {
-			const query = client.query('select * from todos');
+		var parsed = URL.parse(req.url);
+
+		if(parsed.pathname === '/api/todos.json') {
+			// DO it the slow way
+		} else if(parsed.pathname === '/apis/todos.ndjson') {
+			var query = client.query('select * from todos');
 			query.on('row', function(row){
 				var json = JSON.stringify(row);
 				res.write(json + '\n');
@@ -39,7 +44,6 @@ module.exports = function({ cwd = process.cwd() } = {}){
 				res.end();
 			});
 		}
-
 	});
 
 	server.listen(8080);
