@@ -6,29 +6,35 @@ const pg = require('pg');
 
 module.exports = function({ cwd = process.cwd() } = {}){
 	var apiRequest = /api/;
-	
 
-	const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/todo';
+
+	const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/todos';
 	const client = new pg.Client(connectionString);
-	
+
 
 	var server = http.createServer(function(req, res){
 
 		if(apiRequest.test(req.url)) {
 			//db().pipe(ndjson.serialize()).pipe(res);
-			client.connect(connectionString,function(err, client, done)  {
+			client.connect(function(err, client, done)  {
 				if (err) {
 					console.log(err);
 					throw err;
 				}
-				const query = client.query('Select * from todos');
-				query.on('row', (row) => {
-					console.log(row);
-			      	res.write(row);
-			    });
+				const query = client.query('select * from todos');
+				query.on('row', function(row){
+					var json = JSON.stringify(row);
+					res.write(json + '\n');
+			  });
+				query.on('error', function(err){
+					console.error(err);
+				});
+				query.on('end', function(){
+					res.end();
+				});
 			})
-	
-			
+
+
 		} else {
 			var url = req.url;
 			if(url === '/')
