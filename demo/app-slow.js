@@ -9,7 +9,7 @@ Todo.connection = can.connect(["constructor", "can/map", "constructor/store",
 	Map: Todo,
 	List: Todo.List,
 	name: "todo",
-	url: "/api/todos.ndjson"
+	url: "/api/todos.json"
 });
 
 var ViewModel = can.DefineMap.extend({
