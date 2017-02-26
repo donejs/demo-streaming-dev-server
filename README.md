@@ -50,6 +50,12 @@ Stop PostgreSQL
 brew services stop postgresql
 ```
 
+Create user database
+
+```shell
+createdb $(whoami)
+```
+
 Create Database todos
 ```shell
 psql
