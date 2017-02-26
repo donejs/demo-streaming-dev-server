@@ -1,3 +1,3 @@
 const server = require('../server');
 
-server();
+server({ cwd: process.argv[2] });
