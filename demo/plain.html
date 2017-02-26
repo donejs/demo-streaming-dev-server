@@ -1,0 +1,39 @@
+<h1>Todos</h1>
+
+<ul id="todos"></ul>
+
+<script>
+	fetch('/api/todos.ndjson').then(function(res){
+		var decoder = new TextDecoder();
+		var reader = res.body.getReader();
+
+		function readRow() {
+			return reader.read().then(function(result){
+				if(result.done) {
+					return;
+				}
+
+				var jsons = decoder.decode(result.value).split("\n");
+
+				jsons.forEach(function(json){
+					try {
+						var row = JSON.parse(json);
+
+						var li = document.createElement('li');
+						li.textContent = row.text;
+						todos.appendChild(li);
+					} catch(err) {
+						// meh
+					}
+				})
+
+
+
+
+				return readRow();
+			});
+		}
+
+		readRow();
+	});
+</script>
