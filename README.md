@@ -62,6 +62,7 @@ Create Table todos with two columns: id and text
 
 ```shell
 todos=# create table todos (id int not null, text varchar(100));
+todos=# select * from todos;
 ```
 
 Run createdb.sh in the directory(may cost several minutes to finish that)
