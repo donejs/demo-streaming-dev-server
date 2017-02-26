@@ -17,7 +17,18 @@ module.exports = function({ cwd = process.cwd() } = {}){
 		var parsed = URL.parse(req.url);
 
 		if(parsed.pathname === '/api/todos.json') {
-			// DO it the slow way
+			var query = client.query('select * from todos');
+			var allData = [];
+			query.on('row'), function(row) {
+                allData.push(row);
+			};
+			query.on('error', function(err){
+				console.error(err);
+			});
+			query.on('end', function() {
+				res.write(JSON.stringify(allData));
+				res.end();	
+			})
 		} else if(parsed.pathname === '/apis/todos.ndjson') {
 			var query = client.query('select * from todos');
 			query.on('row', function(row){
