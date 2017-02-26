@@ -67,7 +67,7 @@ todos=#
 Create Table todos with two columns: id and text
 
 ```shell
-todos=# create table todos (id int not null, text varchar(100));
+todos=# create table todos (id int not null, text varchar(100), emoji varchar(10));
 todos=# select * from todos;
 ```
 
