@@ -17,7 +17,7 @@ module.exports = function({ cwd = process.cwd() } = {}){
 		var parsed = URL.parse(req.url);
 
 		if(parsed.pathname === '/api/todos.json') {
-			var query = client.query('select * from todos');
+			var query = client.query('select * from todos order by id');
 			var allData = [];
 			query.on('row', function(row) {
       	allData.push(row);
@@ -30,7 +30,7 @@ module.exports = function({ cwd = process.cwd() } = {}){
 				res.end();
 			})
 		} else if(parsed.pathname === '/api/todos.ndjson') {
-			var query = client.query('select * from todos');
+			var query = client.query('select * from todos order by id');
 			query.on('row', function(row){
 				var json = JSON.stringify(row);
 				res.write(json + '\n');

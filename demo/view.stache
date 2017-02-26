@@ -2,6 +2,6 @@
 
 <ul id="todos">
 {{#each todos}}
-	<li>{{text}}</li>
+	<li>{{id}} {{text}} {{{emoji}}}</li>
 {{/each}}
 </ul>

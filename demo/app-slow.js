@@ -24,6 +24,9 @@ var ViewModel = DefineMap.extend({
 		get: function(last, resolve){
 			this.todosPromise.then(resolve);
 		}
+	},
+	e: function(hex) {
+		return hex+";"
 	}
 });
 
