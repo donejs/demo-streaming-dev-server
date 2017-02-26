@@ -3,6 +3,7 @@ const fs = require('fs');
 const http = require('http');
 const ndjson = require('ndjson');
 const pg = require('pg');
+const QueryStream = require('pg-query-stream');
 const URL = require('url');
 
 module.exports = function({ cwd = process.cwd() } = {}){
@@ -30,17 +31,10 @@ module.exports = function({ cwd = process.cwd() } = {}){
 				res.end();
 			})
 		} else if(parsed.pathname === '/api/todos.ndjson') {
-			var query = client.query('select * from todos order by id');
-			query.on('row', function(row){
-				var json = JSON.stringify(row);
-				res.write(json + '\n');
-		  });
-			query.on('error', function(err){
-				console.error(err);
-			});
-			query.on('end', function(){
-				res.end();
-			});
+			var query = new QueryStream('select * from todos order by id');
+			var stream =client.query(query);
+
+			stream.pipe(ndjson.serialize()).pipe(res);
 		} else {
 			var url = req.url;
 			if(url === '/')
