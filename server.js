@@ -10,31 +10,21 @@ module.exports = function({ cwd = process.cwd() } = {}){
 
 	const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/todos';
 	const client = new pg.Client(connectionString);
-
+	client.connect();
 
 	var server = http.createServer(function(req, res){
-
 		if(apiRequest.test(req.url)) {
-			//db().pipe(ndjson.serialize()).pipe(res);
-			client.connect(function(err, client, done)  {
-				if (err) {
-					console.log(err);
-					throw err;
-				}
-				const query = client.query('select * from todos');
-				query.on('row', function(row){
-					var json = JSON.stringify(row);
-					res.write(json + '\n');
-			  });
-				query.on('error', function(err){
-					console.error(err);
-				});
-				query.on('end', function(){
-					res.end();
-				});
-			})
-
-
+			const query = client.query('select * from todos');
+			query.on('row', function(row){
+				var json = JSON.stringify(row);
+				res.write(json + '\n');
+		  });
+			query.on('error', function(err){
+				console.error(err);
+			});
+			query.on('end', function(){
+				res.end();
+			});
 		} else {
 			var url = req.url;
 			if(url === '/')
