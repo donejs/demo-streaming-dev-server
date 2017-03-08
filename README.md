@@ -1,25 +1,24 @@
 # donejs-streaming-dev-server
 
-This is a development server to aid with building streaming tools for web browsers. Running this server will give you a static file server and an API that will deliver todos in [ndjson](http://ndjson.org/) format.
+Before you can develop apps or tools that consume [streaming data](https://github.com/donejs/donejs/issues/834), you need a service that streams data in chunks.
 
-## Install
+This npm package bootstraps a **local node server** to act as a static file server while also providing an API to facilitate streaming data from a PostgreSQL database in [ndjson](http://ndjson.org/) format.
 
-Install with:
+It's a great starting point for your next streaming data JavaScript project.
 
-```shell
+To see a working comparison of the speed increase when streaming database data versus using a traditional API, clone this repo to your machine and visit the [`demo`](./demo) folder for further instructions.
+
+To start using `donejs-streaming-dev-server` in your own app, add it to your project and run it as outlined below.
+
+## Adding `donejs-streaming-dev-server` to your project
+
+Install the package locally:
+
+```
 npm install donejs-streaming-dev-server
 ```
-Install Homebrew to install postgresql database, if you already have homebrew, skip this step.
-```homebrew
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-```
 
-install PostgreSQL with HomeBrew
-```
-brew install postgresql
-```
-
-And then in your package.json scripts add this script:
+In the `scripts` section of your app's `package.json`, add the following:
 
 ```json
 {
@@ -30,57 +29,15 @@ And then in your package.json scripts add this script:
 }
 ```
 
-Alternative you can install globally:
+Alternatively, you can do a global install:
 
-```shell
+```
 npm install -g donejs-streaming-dev-server
 ```
 
-# Create a database
+## Running the streaming dev server
 
-Start PostgreSQL by Brew Service
+If you added `donejs-streaming-dev-server` as an npm script, you can run it with `npm start`.
 
-```shell
-brew tap homebrew/services
-brew services start postgresql
-```
+If you have installed `donejs-streaming-dev-server` globally, run it with `donejs-streaming-dev-server`.
 
-Stop PostgreSQL
-```shell
-brew services stop postgresql
-```
-
-Create user database
-
-```shell
-createdb $(whoami)
-```
-
-Create Database todos
-```shell
-psql
-postgres=# CREATE DATABASE todos;
-postgres=# \c todos;
-todos=#
-```
-
-Create Table todos with two columns: id and text
-
-```shell
-todos=# create table todos (id int not null, text varchar(100), emoji varchar(10));
-todos=# select * from todos;
-```
-
-Run createdb.sh in the directory(may cost several minutes to finish that)
-
-```shell
-sh createdb.sh
-```
-
-
-
-# Running
-
-If you added donejs-streaming-dev-server as an NPM script you can run it with `npm start`.
-
-If installed globally run `donejs-streaming-dev-server`.
