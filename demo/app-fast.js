@@ -3,6 +3,7 @@ var DefineMap = require("can-define/map/map");
 var DefineList = require("can-define/list/list");
 var ndjson = require("can-connect-ndjson");
 var view = require("./view.stache");
+var config = require("./config");
 
 var Todo = DefineMap.extend({});
 
@@ -24,7 +25,20 @@ var ViewModel = DefineMap.extend({
 	},
 	todos: {
 		get: function(last, resolve){
-			this.todosPromise.then(resolve);
+			console.time("first");
+			console.time("total");
+
+			this.todosPromise.then(function(list) {
+				list.on("length", function(ev, len){
+					if(len === 1) {
+						console.timeEnd("first");
+					} else if(len === config.count) {
+						console.timeEnd("total");
+					}
+				});
+			
+				resolve(list);
+			});
 		}
 	}
 });

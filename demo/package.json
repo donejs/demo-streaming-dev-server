@@ -23,5 +23,8 @@
     "plugins": [
       "steal-stache"
     ]
+  },
+  "dependencies": {
+    "can-event": "^3.6.1"
   }
 }

@@ -2,6 +2,7 @@ var connect = require("can-connect/all");
 var DefineMap = require("can-define/map/map");
 var DefineList = require("can-define/list/list");
 var view = require("./view.stache");
+var config = require("./config");
 
 var Todo = DefineMap.extend({});
 
@@ -22,7 +23,11 @@ var ViewModel = DefineMap.extend({
 	},
 	todos: {
 		get: function(last, resolve){
-			this.todosPromise.then(resolve);
+			console.time("total");
+			this.todosPromise.then(function(list){
+				console.timeEnd("total");
+				resolve(list);
+			});
 		}
 	},
 	e: function(hex) {

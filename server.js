@@ -14,11 +14,15 @@ module.exports = function({ cwd = process.cwd() } = {}){
 	const client = new pg.Client(connectionString);
 	client.connect();
 
+	var BUFFER = 500;
+	var COUNT = 500;
+
 	var server = http.createServer(function(req, res){
 		var parsed = URL.parse(req.url);
 
 		if(parsed.pathname === '/api/todos.json') {
-			var query = client.query('select * from todos order by id');
+			var cc = `select * from todos order by id limit ${COUNT}`;
+			var query = client.query(cc);
 			var allData = [];
 			query.on('row', function(row) {
       	allData.push(row);
@@ -31,10 +35,26 @@ module.exports = function({ cwd = process.cwd() } = {}){
 				res.end();
 			})
 		} else if(parsed.pathname === '/api/todos.ndjson') {
-			var query = new QueryStream('select * from todos order by id');
-			var stream =client.query(query);
+			var cc = `select * from todos order by id limit ${COUNT}`;
+			var query = client.query(cc);
+			var datas = [];
 
-			stream.pipe(ndjson.serialize()).pipe(res);
+			query.on("row", function(row){
+				datas.push(row);
+
+				if(datas.length === BUFFER) {
+					var msg = "";
+					datas.forEach(function(row){
+						msg += (JSON.stringify(row) + "\n");
+					});
+					res.write(msg);
+					datas.length = 0;
+				}
+			});
+
+			query.on("end", function(){
+				res.end();
+			});
 		} else {
 			var url = req.url;
 			if(url === '/')
