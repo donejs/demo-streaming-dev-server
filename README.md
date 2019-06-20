@@ -1,5 +1,7 @@
 # donejs-streaming-dev-server
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/donejs/demo-streaming-dev-server.svg)](https://greenkeeper.io/)
+
 Before you can develop apps or tools that consume [streaming data](https://github.com/donejs/donejs/issues/834), you need a service that streams data in chunks.
 
 This npm package bootstraps a **local node server** to act as a static file server while also providing an API to facilitate streaming data from a PostgreSQL database in [ndjson](http://ndjson.org/) format.
